@@ -3,7 +3,7 @@ var isValid = function(input) {
     return result;
 }
 
-function isValidJson(str) {
+var isValidJson = function(str) {
     try {
         JSON.parse(str);
     } catch (e) {
