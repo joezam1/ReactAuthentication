@@ -12,11 +12,9 @@ function isValidJson(str) {
     return true;
 }
 
-
 var methods = {
     isValid: isValid,
     isValidJson:isValidJson
 }
-
 
 module.exports = methods;

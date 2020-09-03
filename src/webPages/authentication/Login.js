@@ -8,14 +8,13 @@ import sessionConfig from '../../configuration/SessionCookieConfig.js';
 
 const url = serverConfig.url;
 
+
 export default function Login(){
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [messageInfo, setResponse] = useState('');
     
-
     function setServerResponseCallback(response){
         if(response.status === 'OK'){
-           
             setCookies(response);
             setSessionConfiguration(response);
             setLoggedIn(true);
@@ -29,11 +28,12 @@ export default function Login(){
     }
 
     function setCookies(response){
-        var userToken = sessionConfig.UserTokenName();
+        var accessToken = sessionConfig.AccessTokenName();
         var refreshToken = sessionConfig.RefreshTokenName();
         var homePath = { path: '/' };
-        Cookies.set(userToken, response.accessToken,homePath);
+        Cookies.set(accessToken, response.accessToken,homePath);
         Cookies.set(refreshToken, response.refreshToken,homePath);
+
         var sessionCookie = sessionConfig.SessionCookieName();
         var serverTime = new Date(new Date().getTime() + response.sessionInfo.cookie.originalMaxAge);
         Cookies.set(sessionCookie, response.sessionID, { 
@@ -87,6 +87,8 @@ export default function Login(){
             </fieldset>
                 <p>Don't have an account? Go to</p>
             <Link to='/auth/signup'>Signup </Link>
+            <br/>
+            <Link to='/'>HOME </Link>
         </div>
     )
 }

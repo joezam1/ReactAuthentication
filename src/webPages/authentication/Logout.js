@@ -5,23 +5,28 @@ import Cookies from 'js-cookie';
 import ServerConfig from '../../configuration/ServerConfig.js';
 import httpMethods from '../../httpRequests/Methods.js';
 import inputCommon from '../../library/InputCommon.js';
+import Logger from '../../modules/data.recording/Logger.js';
+
 
 export default function Logout(){
-
-    //useEffect()==logout
+    const [fetched, setFetched] = React.useState(false);
+    const abortController = new AbortController();
+    function cleanupFetch(){
+        abortController.abort();
+    }
+    //NOTE:useEffect()==logout
     //destroy all front end session and tokens stored in cookies.
     //remove all the values in she sessionCookieConfiguration and notify
     //the Back end to delete and remove all tokens and user sessions.
 
     function setServerResponseCallback(response){
-        console.log(response);
-
-        if(inputCommon.isValid(response) && response.status !== 'ERROR'){
+        Logger.resolveLog(response);        
+        if(inputCommon.isValid(response)){
+            setFetched(true);            
             //Always destroy the sessions. 
             destroyAllSessionCookies();
-            setSessionCookieConfig();
-        }
-       
+            setSessionCookieConfig();            
+        }       
     }
 
     useEffect(function(){
@@ -29,15 +34,12 @@ export default function Logout(){
         var logoutPath = '/api/logout';
         var logoutUrl = url+logoutPath;
         httpMethods.getMethod(logoutUrl, setServerResponseCallback);
-
+        return cleanupFetch();
     },[]);
-
-
-
 
     function destroyAllSessionCookies(){
         var sessionCookie = sessionConfig.SessionCookieName();
-        var userToken = sessionConfig.UserTokenName();
+        var userToken = sessionConfig.AccessTokenName();
         var refreshToken = sessionConfig.RefreshTokenName();
         var sessionArray = [sessionCookie,userToken,refreshToken]
         for(var a=0; a<sessionArray.length;a++){
@@ -64,12 +66,14 @@ export default function Logout(){
         sessionConfig.setHttpOnly(true);
         sessionConfig.setPath('');
         sessionConfig.setSameSite(false);
-        
     }
-
-    return(<div>
-        <div><p>You are logged out </p></div>
-        <Link to='/'>Home</Link>
-    </div>)
+    
+    var displayCurrentStatus = (fetched) ? (<div>
+                                <div><p>You are logged out </p></div>
+                                    <Link to='/'>Home</Link>
+                                </div> ) 
+                                : ('wait...');
+            return (<div> {displayCurrentStatus}
+            </div>)
 }
 

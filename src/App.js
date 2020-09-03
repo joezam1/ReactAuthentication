@@ -10,13 +10,13 @@ import Dashboard from './webPages/privatePages/Dashboard.js';
 import UserAccount from './webPages/privatePages/UserAccount.js';
 
 
-
 function App(){
     return(
-        <div>test 
+        <div>Website
             <BrowserRouter>
                 <Switch>
                     <Route path='/' component={Home} exact/>
+                    
                     <Route path='/auth/login' component={Login} />
                     <Route path='/auth/signup' component={Signup} />
                     <Route path='/auth/logout' component={Logout}/>

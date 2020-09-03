@@ -4,10 +4,10 @@ import pagesAuth from '../../mediatorLayer/PrivatePagesAuthDecorator.js';
 import SessionCookieConfig from '../../configuration/SessionCookieConfig.js';
 import ServerConfig from '../../configuration/ServerConfig.js';
 import HttpMethods from '../../httpRequests/Methods.js';
+import Logger from '../../modules/data.recording/Logger.js';
 
 
 export default function UserAccount(){
-
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [messageInfo, setResponse] = useState('');
@@ -18,7 +18,7 @@ export default function UserAccount(){
     },[]);
 
     function setServerResponseCallback(response){
-        console.log('response',response);
+        Logger.resolveLog('response',response);
         if(response.status === 'OK'){
             var objArray = response.result;
             if(objArray.length > 0 ){
@@ -46,8 +46,7 @@ export default function UserAccount(){
         var usersPath = '/api/user';
         var idPath = '?userId='+userId;
         var singleUserUrl = url+usersPath+idPath; //'http://localhost:5000/api/user?userId=3''
-        HttpMethods.getMethod(singleUserUrl,setServerResponseCallback);            
-        
+        HttpMethods.getMethod(singleUserUrl,setServerResponseCallback);
     }
 
     return(

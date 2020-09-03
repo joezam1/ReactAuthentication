@@ -50,7 +50,6 @@ export default function Signup(){
     if (isRegistered) {
         return <Redirect to='/auth/login' />
      }
- 
 
     return( <div>
         <h3>Signup</h3>
@@ -68,5 +67,7 @@ export default function Signup(){
         
         <p>Already have an account? Go to  </p>
         <Link to='/auth/login'> Login</Link>
+        <br/>
+        <Link to='/'>HOME </Link>
     </div>)
 }

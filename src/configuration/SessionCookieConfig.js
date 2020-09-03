@@ -1,14 +1,12 @@
-
-
 var sessionCookie = (function(){
 
-    const userTokenName = 'accessToken';
+    const accessTokenName = 'accessToken';
     const refreshTokenName = 'refreshToken';
     const sessionCookieName = 'sessionCookie';
     var sessionId = '';
     var userId = 0;
     var cookie ={
-        originalMaxAge :0,//30000,
+        originalMaxAge :0,
         expires :'',// "2020-08-14T13:13:35.171Z",
         secure: false,
         httpOnly: true,
@@ -50,7 +48,7 @@ var sessionCookie = (function(){
     function getHttpOnly(){return cookie.httpOnly; }
     function getPath(){ return cookie.path; }
     function getSameSite(){ return cookie.sameSite; }
-    function UserTokenName(){return userTokenName;}
+    function AccessTokenName(){return accessTokenName;}
     function RefreshTokenName(){return refreshTokenName;}
     function SessionCookieName(){return sessionCookieName;}
 
@@ -73,7 +71,7 @@ var sessionCookie = (function(){
         getPath:getPath,
         getSameSite:getSameSite,
 
-        UserTokenName:UserTokenName,
+        AccessTokenName:AccessTokenName,
         RefreshTokenName:RefreshTokenName,
         SessionCookieName:SessionCookieName,
     }
